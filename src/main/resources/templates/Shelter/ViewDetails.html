@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title th:text="${title}">DISCUS</title>
 </head>
 <body>
+    <div th:insert="fragments/header :: sightHeader"></div>
     <table>
         <tr>
             <td>Name</td><td th:text="${pet.name}"></td>
@@ -48,8 +50,17 @@
         <tr>
             <td>Deathby</td><td th:text="${pet.deathBy}"></td>
         </tr>
-
-
     </table>
+    <div class="action-button">
+        <p th:text="${status.status}"></p>
+    </div>
+    
+    <div class="action-button">
+        <a class="button-link" th:href="@{/feed/{id}(id=${pet.id})}">Feed</a>
+        <a class="button-link" th:href="@{/water/{id}(id=${pet.id})}">Water</a>
+        <a class="button-link" th:href="@{/play/{id}(id=${pet.id})}">Play</a>
+        <a class="button-link" th:href="@{/heal/{id}(id=${pet.id})}">Heal</a>
+    </div>
+    <div th:insert="fragments/footer :: sightFooter"></div>
 </body>
 </html>

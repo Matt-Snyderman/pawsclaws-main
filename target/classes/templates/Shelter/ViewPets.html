@@ -4,30 +4,42 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title th:text="${title}">DISCUS</title>
 </head>
 
 <body>
-    <a href="/create">Admit a Pet</a>
+    <div th:insert="fragments/header :: sightHeader"></div>
+    <!-- <a href="/create">Admit a Pet</a> -->
     <table>
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Type</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="pet : ${pets}">
-                <!-- <td th:text="${pet.name}"></td> -->
                 <td th:text="${pet.name}"></td>
                 <td th:text="${pet.age}"></td>
                 <td th:text="${pet.petType}"></td>
-                <td><a href="#" th:href="@{/details/{id}(id=${pet.id})}">Details</a></td>
+                <td th:text="${pet.status}"></td>
+                <td>
+                    <a class="button-link" href="#" th:href="@{/details/{id}(id=${pet.id})}">Details</a>
+                    <a class="button-link" href="#" th:href="@{/edit/{id}(id=${pet.id})}">Edit</a>
+                    <!-- <a class="button-link" href="#" th:href="@{/adopt/{id}(id=${pet.id})}">Adopt</a> -->
+
+                    <form th:action="@{/adopt/{id}(id=${pet.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="button-link">Adopt</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
+    <div th:insert="fragments/footer :: sightFooter"></div>
 </body>
 
 </html>
