@@ -31,10 +31,10 @@
                     <a class="button-link" href="#" th:href="@{/details/{id}(id=${pet.id})}">Details</a>
                     <a class="button-link" href="#" th:href="@{/edit/{id}(id=${pet.id})}">Edit</a>
                     <!-- <a class="button-link" href="#" th:href="@{/adopt/{id}(id=${pet.id})}">Adopt</a> -->
-
-                    <form th:action="@{/adopt/{id}(id=${pet.id})}" method="post" style="display:inline;">
+                    <a class="button-link" th:href="@{/adopt/{id}(id=${pet.id})}">Adopt</a>
+                    <!-- <form th:action="@{/adopt/{id}(id=${pet.id})}" method="post" style="display:inline;">
                         <button type="submit" class="button-link">Adopt</button>
-                    </form>
+                    </form> -->
                 </td>
             </tr>
         </tbody>
