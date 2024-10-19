@@ -17,6 +17,8 @@ public class PetDTO extends ErrorDataDTO {
     private int oil;
     private int battery;
 
+    private String image;
+
 
     public long getId() {
         return id;
@@ -100,5 +102,12 @@ public class PetDTO extends ErrorDataDTO {
     public boolean isRobot(){
         return (this.getPetType()== petType.RoboticCat || this.getPetType() == petType.RoboticDog);
     }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
 
+    
 }

@@ -47,13 +47,31 @@ public class PetController {
      */
     @GetMapping("details/{id}")
     public String getDetails(@PathVariable long id, Model model) {
+        PetDTO pet = service.getPetById(id);
         StatusDTO status = new StatusDTO(); // Initialize a StatusDTO object
-        PetDTO pet = service.getPetById(id); // Fetch pet details using the provided ID
-        pet.setStatus(pet.getStatus().replace("/n", "</br>")); // Replace newline characters for HTML
-        model.addAttribute("pet", pet); // Add pet details to the model
-        model.addAttribute("title", "Details for " + pet.getName()); // Set page title
-        model.addAttribute("status", status); // Add status to the model
-        return "Shelter/ViewDetails"; // Return the details view
+        model.addAttribute("title", "Pet Details");
+        if (pet != null){
+            model.addAttribute("pet", pet);
+            String image = service.getPetImage(pet.getName(), pet.getPetType().toString());
+            model.addAttribute("image", image);
+            model.addAttribute("status", status); // Add status to the model
+            return "Shelter/ViewDetails";
+        } else {
+            ErrorDataDTO er = new ErrorDataDTO();
+            er.setErrorMessage("Pet is not available");
+            er.setErrorCode(101);
+            model.addAttribute("error", er);
+            return "Shelter/ErrorMessage";
+        }
+        
+        
+        // StatusDTO status = new StatusDTO(); // Initialize a StatusDTO object
+        // PetDTO pet = service.getPetById(id); // Fetch pet details using the provided ID
+        // pet.setStatus(pet.getStatus().replace("/n", "</br>")); // Replace newline characters for HTML
+        // model.addAttribute("pet", pet); // Add pet details to the model
+        // model.addAttribute("title", "Details for " + pet.getName()); // Set page title
+        // model.addAttribute("status", status); // Add status to the model
+        // return "Shelter/ViewDetails"; // Return the details view
     }
 
     /**

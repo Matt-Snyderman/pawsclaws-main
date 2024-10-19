@@ -35,6 +35,7 @@
         <!-- Table header defines the columns for the pet details: Name, Age, Type, Status, and Action. -->
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Type</th>
@@ -45,6 +46,7 @@
         <tbody>
             <!-- Loops through the "pets" collection provided by the model, using Thymeleaf's th:each. -->
             <tr th:each="pet : ${pets}">
+                <td><img th:src="${pet.image}" th:alt="${pet.name}" width=20% height=20%></td>
                 <!-- Displays the name of each pet dynamically. -->
                 <td th:text="${pet.name}"></td>
                 <!-- Displays the age of each pet dynamically. -->

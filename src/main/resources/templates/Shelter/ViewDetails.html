@@ -8,6 +8,9 @@
 </head>
 <body>
     <div th:insert="~{fragments/header :: siteHeader}"></div>
+    <span class="center-image">
+    <img th:src="${image}" alt="" width = 20% height="20%">
+</span>
     <table>
         <tr>
             <td>Name</td><td th:text="${pet.name}"></td>

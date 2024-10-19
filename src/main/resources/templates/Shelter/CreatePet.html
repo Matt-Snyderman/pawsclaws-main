@@ -8,6 +8,7 @@
   </head>
   <body>
     <div th:insert="~{fragments/header :: siteHeader}"></div>
+    <div class ="contact-container" >
     <form action="#" th:action="@{/saveadd}" method="post" th:object="${pet}">
       <div>
         <label>Name</label>
@@ -27,6 +28,7 @@
           ></option>
         </select>
       </div>
+    </div>
       <div th:if="${pet.errorMessage !=null and !pet.errorMessage.isEmpty()}">
         <p th:text="${pet.errorMessage}"></p>
       </div>

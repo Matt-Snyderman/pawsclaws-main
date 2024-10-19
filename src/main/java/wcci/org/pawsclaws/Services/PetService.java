@@ -1,5 +1,6 @@
 package wcci.org.pawsclaws.Services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import wcci.org.pawsclaws.DTO.AdmissionDTO;
-import wcci.org.pawsclaws.DTO.EditPetDTO;
-import wcci.org.pawsclaws.DTO.PetDTO;
-import wcci.org.pawsclaws.DTO.StatusDTO;
+import wcci.org.pawsclaws.DTO.*;
+
+import wcci.org.pawsclaws.Enums.PetType;
 
 @Service
 public class PetService {
@@ -34,9 +34,12 @@ public class PetService {
 
         // Makes GET request to retrieve the array of pets
         PetDTO[] pets = restTemplate.getForObject(url, PetDTO[].class);
-
+        List<PetDTO> result = Arrays.asList(pets);
+        for (PetDTO pet : result){
+            pet.setImage(this.getPetImage(pet.getName(), pet.getPetType().toString()));
+        }
         // Converts array to a list and returns it
-        return Arrays.asList(pets);
+        return result;
     }
 
     /**
@@ -111,5 +114,54 @@ public class PetService {
         
         // Makes DELETE request to remove the pet
         restTemplate.delete(url);
+    }
+
+    public String getPetImage(String name, String petTypeString){
+        name=name.replace("","_");
+        String result = "";
+        PetType petType = PetType.valueOf(petTypeString);
+        switch (petType){
+            case Cat: {
+                result = getCatImage(name);
+                break;
+            }
+            case Dog: {
+                result = getDogImage(name);
+                break;
+            }
+            case RoboticCat:
+            case RoboticDog:
+            {
+                result = getRoboImage(name);
+                break;
+            }
+            default:{
+                break;
+            }
+            }
+            return result;
+        }
+    
+
+    public String getCatImage (String name){
+
+        String url =  "https://api.thecatapi.com/v1/images/search";
+
+        CatImageDTO[] pets = restTemplate.getForObject(url, CatImageDTO[].class);
+        if (pets ==null){
+            return "";
+        }
+        return pets[0].getUrl();
+    }
+
+    public String getDogImage (String name){
+        String url = "https://place.dog/300/300";
+        return url;
+    }
+
+    public String getRoboImage (String name){
+
+        String url = "https://robohash.org/" + name;
+        return url;
     }
 }
