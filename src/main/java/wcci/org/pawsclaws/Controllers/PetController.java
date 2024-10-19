@@ -10,7 +10,6 @@ import wcci.org.pawsclaws.DTO.*;
 import wcci.org.pawsclaws.Enums.PetType;
 import wcci.org.pawsclaws.Services.PetService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PetController {
@@ -85,7 +84,7 @@ public class PetController {
             pet.setErrorMessage(ex.getMessage()); // Set error message on exception
             pet.setErrorCode(400); // Set error code
             model.addAttribute("pet", pet); // Add pet data back to the model for the form
-            model.addAttribute("title", "Create pet"); // Set page title
+            model.addAttribute("title", "Create pet "); // Set page title
             model.addAttribute("petTypes", PetType.values()); // Add pet types to the model
             return "Shelter/CreatePet"; // Return the pet creation view with error info
         }
@@ -102,7 +101,7 @@ public class PetController {
     public String editPet(@PathVariable long id, Model model) {
         EditPetDTO pet = new EditPetDTO(service.getPetById(id)); // Create an EditPetDTO from the pet's data
         model.addAttribute("pet", pet); // Add the EditPetDTO to the model
-        model.addAttribute("title", "Edit pet"); // Set the page title
+        model.addAttribute("title", "Edit pet "); // Set the page title
         model.addAttribute("petTypes", PetType.values()); // Add pet types to the model
         return "Shelter/EditPet"; // Return the pet edit view
     }
@@ -121,7 +120,7 @@ public class PetController {
             pet.setErrorMessage(ex.getMessage()); // Set error message on exception
             pet.setErrorCode(400); // Set error code
             model.addAttribute("pet", pet); // Add pet data back to the model for the form
-            model.addAttribute("title", "Create pet"); // Set page title
+            model.addAttribute("title", "Create pet "); // Set page title
             model.addAttribute("petTypes", PetType.values()); // Add pet types to the model
             return "Shelter/EditPet"; // Return the pet edit view with error info
         }
@@ -170,7 +169,9 @@ public class PetController {
      */
     @GetMapping("play/{id}")
     public String playPet(@PathVariable long id, Model model) {
-        StatusDTO status = service.carePet(id, "play"); // Perform the play action and get status
+        
+        try{
+            StatusDTO status = service.carePet(id, "play"); // Perform the play action and get status
         PetDTO pet = service.getPetById(id); // Fetch pet details
         model.addAttribute("pet", pet); // Add pet details to the model
         model.addAttribute("title", "Details for " + pet.getName()); // Set page title
@@ -178,6 +179,14 @@ public class PetController {
         model.addAttribute("status", status); // Add status to the model
         return "Shelter/ViewDetails"; // Return the details view
     }
+    catch (Exception ex){
+        ErrorDataDTO errorDataDTO = new ErrorDataDTO();
+        errorDataDTO.setErrorMessage(ex.getMessage());
+        errorDataDTO.setErrorCode(200);
+        model.addAttribute("errorDataDTO", errorDataDTO);
+        return "Shelter/errorMessage";
+    }
+}
 
     /**
      * Performs a 'heal' action for a specific pet.
@@ -187,6 +196,7 @@ public class PetController {
      */
     @GetMapping("heal/{id}")
     public String healPet(@PathVariable long id, Model model) {
+        try{
         StatusDTO status = service.carePet(id, "heal"); // Perform the heal action and get status
         PetDTO pet = service.getPetById(id); // Fetch pet details
         model.addAttribute("pet", pet); // Add pet details to the model
@@ -195,6 +205,14 @@ public class PetController {
         model.addAttribute("status", status); // Add status to the model
         return "Shelter/ViewDetails"; // Return the details view
     }
+    catch (Exception ex){
+        ErrorDataDTO errorDataDTO = new ErrorDataDTO();
+        errorDataDTO.setErrorMessage(ex.getMessage());
+        errorDataDTO.setErrorCode(200);
+        model.addAttribute("errorDataDTO", errorDataDTO);
+        return "Shelter/errorMessage";
+    }
+}
 
     /**
      * Deletes a pet, marking it as adopted.
@@ -211,7 +229,7 @@ public class PetController {
             errorData.setErrorMessage(ex.getMessage()); // Set error message on exception
             errorData.setErrorCode(500); // Set error code
             model.addAttribute("errorData", errorData); // Add error data to the model
-            model.addAttribute("title", "Error adding pet");
+            model.addAttribute("title", "Error adopting pet");
             return "Shelter/ErrorMessage"; // Return the error view
         }
         return "redirect:/home"; // Redirect to the home page on success

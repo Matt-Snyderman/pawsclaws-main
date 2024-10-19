@@ -9,13 +9,13 @@
 </head>
 
 <body>
-    <div th:insert="fragments/header :: siteHeader"></div>
+    <div th:insert="~{fragments/header :: siteHeader}"></div>
     <!-- CODE GOES HERE!!!! -->
      <h1>Error Message</h1>
-     <label th:text="errorData.errorMessage"></label>
-     <label th:text="errorData.errorCode"></label>
+     <label th:text="${errorDataDTO.errorMessage}"></label>
+     <label th:text="${errorDataDTO.errorCode}"></label>
      <a class="button-link" href="/home"></a>
-    <div th:insert="fragments/footer :: siteFooter"></div>
+    <div th:insert="~{fragments/footer :: siteFooter}"></div>
 </body>
 
 </html>

@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Declares the document type and sets the language to English. The xmlns:th attribute specifies the Thymeleaf namespace. -->
 
 <head>
     <meta charset="UTF-8" />
+    <!-- Defines the character encoding as UTF-8, ensuring the webpage can handle a wide range of characters. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Ensures the website is responsive by setting the viewport to scale properly on different devices. -->
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Links an external CSS file to style the webpage. Uses Thymeleaf's th:href for dynamic URL resolution. -->
+
     <title th:text="${title}">DISCUS</title>
+    <!-- Sets the page title dynamically using Thymeleaf's th:text. "DISCUS" is a default fallback if the title is not provided. -->
+
+    <script>
+        // Defines a JavaScript function to confirm pet adoption and redirect based on user input.
+        function confirmAdoption(petId) {
+            // Shows a confirmation dialog asking if the user is sure about adopting the pet.
+            const isConfirmed = confirm("Are you sure you want to adopt this pet?");
+            if (isConfirmed) {
+                // If the user confirms, redirect to the adopt page with the pet ID in the URL.
+                window.location.href = `/adopt/${petId}`;
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <div th:insert="fragments/header :: siteHeader"></div>
-    <!-- <a href="/create">Admit a Pet</a> -->
+    <!-- The site header is inserted dynamically from the "fragments/header" template using Thymeleaf. -->
+    <div th:insert="~{fragments/header :: siteHeader}"></div>
+
     <table>
+        <!-- Table header defines the columns for the pet details: Name, Age, Type, Status, and Action. -->
         <thead>
             <tr>
                 <th>Name</th>
@@ -22,24 +43,31 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Loops through the "pets" collection provided by the model, using Thymeleaf's th:each. -->
             <tr th:each="pet : ${pets}">
+                <!-- Displays the name of each pet dynamically. -->
                 <td th:text="${pet.name}"></td>
+                <!-- Displays the age of each pet dynamically. -->
                 <td th:text="${pet.age}"></td>
+                <!-- Displays the type of pet (e.g., dog, cat) dynamically. -->
                 <td th:text="${pet.petType}"></td>
-                <td th:text="${pet.status}"></td>
+                <!-- Displays the status of each pet (e.g., available, adopted) dynamically. -->
+                <td class="td-status" th:utext="${pet.status}"></td>
                 <td>
+                    <!-- Link to the pet's details page, with the pet's ID passed dynamically via the URL. -->
                     <a class="button-link" href="#" th:href="@{/details/{id}(id=${pet.id})}">Details</a>
+                    <!-- Link to edit the pet's details, with the pet's ID passed dynamically via the URL. -->
                     <a class="button-link" href="#" th:href="@{/edit/{id}(id=${pet.id})}">Edit</a>
-                    <!-- <a class="button-link" href="#" th:href="@{/adopt/{id}(id=${pet.id})}">Adopt</a> -->
-                    <a class="button-link" th:href="@{/adopt/{id}(id=${pet.id})}">Adopt</a>
-                    <!-- <form th:action="@{/adopt/{id}(id=${pet.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="button-link">Adopt</button>
-                    </form> -->
+                    <!-- "Adopt" button triggers the confirmAdoption function using the pet's ID. -->
+                    <a class="button-link" href="javascript:void(0);" 
+                       th:onclick="'confirmAdoption(' + ${pet.id} + ');'">Adopt</a>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div th:insert="fragments/footer :: siteFooter"></div>
+
+    <!-- The site footer is inserted dynamically from the "fragments/footer" template using Thymeleaf. -->
+    <div th:insert="~{fragments/footer :: siteFooter}"></div>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
 body {
     font-family: arial,sans-serif;
     line-height: 1.6;
-    background-color: #FFE45E;
+    background-color: #939e85;
 }
 
 header {
@@ -67,7 +67,7 @@ table {
 }
 
 table th, table td {
-    border: 3px #F56416;
+    border: 3px #92451c;
     border-style: solid;
     padding: 10px;
     text-align: center;
@@ -120,4 +120,9 @@ button:hover{
 
 .action-button a{
     margin: 0 10px;
+}
+
+.td-status{
+    text-align: center;
+    align-items: center;
 }

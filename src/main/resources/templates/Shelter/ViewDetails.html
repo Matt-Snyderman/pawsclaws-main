@@ -7,7 +7,7 @@
     <title th:text="${title}">DISCUS</title>
 </head>
 <body>
-    <div th:insert="fragments/header :: siteHeader"></div>
+    <div th:insert="~{fragments/header :: siteHeader}"></div>
     <table>
         <tr>
             <td>Name</td><td th:text="${pet.name}"></td>
@@ -61,6 +61,6 @@
         <a class="button-link" th:href="@{/play/{id}(id=${pet.id})}">Play</a>
         <a class="button-link" th:href="@{/heal/{id}(id=${pet.id})}">Heal</a>
     </div>
-    <div th:insert="fragments/footer :: siteFooter"></div>
+    <div th:insert="~{fragments/footer :: siteFooter}"></div>
 </body>
 </html>
